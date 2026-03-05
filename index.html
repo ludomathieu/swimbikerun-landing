@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0044)file:///Users/ludovic/Downloads/index_1.html -->
+<!-- saved from url=(0044)file:///Users/ludovic/Downloads/index_2.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,19 +23,28 @@
     body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 0; opacity: 0.4; }
 
     /* NAV */
-    nav { position: fixed; top: 0; left: 0; right: 0; display: flex; align-items: center; justify-content: space-between; padding: 20px 48px; background: rgba(7,7,15,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.04); z-index: 100; }
-    .nav-logo { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 20px; letter-spacing: 1px; color: var(--text); display: flex; align-items: center; gap: 10px; }
-    .nav-logo-dots { display: flex; gap: 5px; }
-    .nav-logo-dot { width: 8px; height: 8px; border-radius: 4px; }
-    .nav-right { display: flex; align-items: center; gap: 12px; }
+    nav { position: fixed; top: 0; left: 0; right: 0; display: flex; align-items: center; justify-content: space-between; padding: 16px 48px; background: rgba(7,7,15,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.04); z-index: 100; }
+    .nav-logo { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 18px; letter-spacing: 1px; color: var(--text); display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+    .nav-logo-dots { display: flex; gap: 4px; flex-shrink: 0; }
+    .nav-logo-dot { width: 7px; height: 7px; border-radius: 4px; }
+    .nav-right { display: flex; align-items: center; gap: 8px; }
 
-    .lang-toggle { display: flex; align-items: center; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
-    .lang-btn { padding: 8px 14px; cursor: none; background: transparent; border: none; font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.5px; color: var(--muted); transition: background 0.2s, color 0.2s; }
+    .lang-toggle { display: flex; align-items: center; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+    .lang-btn { padding: 6px 10px; cursor: none; background: transparent; border: none; font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; color: var(--muted); transition: background 0.2s, color 0.2s; }
     .lang-btn.active { background: var(--swim); color: #000; }
     .lang-btn:hover:not(.active) { color: var(--text); }
 
-    .nav-cta { background: var(--swim); color: #000; font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 14px; letter-spacing: 0.5px; padding: 10px 22px; border-radius: 10px; text-decoration: none; cursor: none; transition: opacity 0.2s, transform 0.2s; }
+    .nav-cta { background: var(--swim); color: #000; font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 0.5px; padding: 8px 16px; border-radius: 8px; text-decoration: none; cursor: none; white-space: nowrap; transition: opacity 0.2s, transform 0.2s; }
     .nav-cta:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    @media (max-width: 768px) {
+      nav { padding: 12px 16px; }
+      .nav-logo { font-size: 15px; gap: 7px; }
+      .nav-logo-dot { width: 6px; height: 6px; }
+      .nav-right { gap: 6px; }
+      .lang-btn { padding: 5px 9px; font-size: 11px; }
+      .nav-cta { font-size: 12px; padding: 7px 12px; }
+    }
 
     /* HERO */
     .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 120px 24px 80px; position: relative; overflow: hidden; }
@@ -132,7 +141,6 @@
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
     @media (max-width: 768px) {
-      nav { padding: 16px 20px; }
       .features { padding: 80px 20px; }
       .features-grid { grid-template-columns: 1fr; gap: 1px; }
       .feature-card { padding: 32px 24px; }
@@ -144,7 +152,7 @@
 </head>
 <body>
 
-<div class="cursor" id="cursor" style="left: 955px; top: 531px;"></div>
+<div class="cursor" id="cursor" style="left: 1080px; top: 566px;"></div>
 
 <nav>
   <div class="nav-logo">
@@ -160,7 +168,7 @@
       <button class="lang-btn active" onclick="setLang(&#39;en&#39;)">EN</button>
       <button class="lang-btn" onclick="setLang(&#39;fr&#39;)">FR</button>
     </div>
-    <a href="file:///Users/ludovic/Downloads/index_1.html#download" class="nav-cta" data-en="Download iOS" data-fr="Télécharger iOS">Download iOS</a>
+    <a href="file:///Users/ludovic/Downloads/index_2.html#download" class="nav-cta" data-en="Download iOS" data-fr="Télécharger iOS">Download iOS</a>
   </div>
 </nav>
 
@@ -180,7 +188,7 @@
   <p class="hero-tagline" data-en="Everything you need to &lt;strong&gt;prepare, race&lt;/strong&gt; and &lt;strong&gt;analyse&lt;/strong&gt; every triathlon." data-fr="Tout ce qu&#39;il vous faut pour &lt;strong&gt;préparer, vivre&lt;/strong&gt; et &lt;strong&gt;analyser&lt;/strong&gt; chaque triathlon.">Everything you need to <strong>prepare, race</strong> and <strong>analyse</strong> every triathlon.</p>
 
   <div class="hero-actions" id="download">
-    <a href="file:///Users/ludovic/Downloads/index_1.html#" class="btn-appstore">
+    <a href="file:///Users/ludovic/Downloads/index_2.html#" class="btn-appstore">
       <span class="btn-appstore-text">
         <span class="btn-appstore-sub" data-en="Download on the" data-fr="Disponible sur l&#39;">Download on the</span>
         <span class="btn-appstore-label">App Store</span>
@@ -240,11 +248,11 @@
 </section>
 
 <section class="features">
-  <p class="section-eyebrow reveal" data-en="Built for triathletes" data-fr="Conçu pour les triathlètes" style="transition-delay: 0s;">Built for triathletes</p>
-  <h2 class="section-title reveal" data-en="Three disciplines.&lt;br&gt;One app." data-fr="Trois disciplines.&lt;br&gt;Une seule app." style="transition-delay: 0.08s;">Three disciplines.<br>One app.</h2>
+  <p class="section-eyebrow reveal visible" data-en="Built for triathletes" data-fr="Conçu pour les triathlètes" style="transition-delay: 0s;">Built for triathletes</p>
+  <h2 class="section-title reveal visible" data-en="Three disciplines.&lt;br&gt;One app." data-fr="Trois disciplines.&lt;br&gt;Une seule app." style="transition-delay: 0.08s;">Three disciplines.<br>One app.</h2>
 
   <div class="features-grid">
-    <div class="feature-card swim reveal" style="transition-delay: 0.16s;">
+    <div class="feature-card swim reveal visible" style="transition-delay: 0.16s;">
       <div class="feature-num">01</div>
       <span class="feature-icon">✅</span>
       <h3 class="feature-title" data-en="Gear Checklist" data-fr="Checklist matériel">Gear Checklist</h3>
@@ -256,7 +264,7 @@
       </div>
     </div>
 
-    <div class="feature-card bike reveal" style="transition-delay: 0.24s;">
+    <div class="feature-card bike reveal visible" style="transition-delay: 0.24s;">
       <div class="feature-num">02</div>
       <span class="feature-icon">🔔</span>
       <h3 class="feature-title" data-en="Smart Reminders" data-fr="Rappels intelligents">Smart Reminders</h3>
@@ -268,7 +276,7 @@
       </div>
     </div>
 
-    <div class="feature-card run reveal" style="transition-delay: 0.32s;">
+    <div class="feature-card run reveal visible" style="transition-delay: 0.32s;">
       <div class="feature-num">03</div>
       <span class="feature-icon">📊</span>
       <h3 class="feature-title" data-en="Post-Race Debrief" data-fr="Débrief post-course">Post-Race Debrief</h3>
@@ -284,13 +292,13 @@
 
 <section class="cta-section">
   <div class="cta-glow"></div>
-  <h2 class="cta-title reveal" style="transition-delay: 0.4s;">
+  <h2 class="cta-title reveal visible" style="transition-delay: 0.4s;">
     <span data-en="Ready to" data-fr="Prêt à">Ready to</span><br>
     <span style="color:var(--swim)" data-en="race" data-fr="courir">race</span><span style="color:var(--bike)" data-en=" smarter" data-fr=" plus"> smarter</span><span style="color:var(--run)" data-en="?" data-fr=" fort ?">?</span>
   </h2>
-  <p class="cta-sub reveal" data-en="Free to download. No account needed. Your data stays on your device." data-fr="Gratuit. Sans compte. Vos données restent sur votre appareil." style="transition-delay: 0.48s;">Free to download. No account needed. Your data stays on your device.</p>
-  <div class="cta-actions reveal" style="transition-delay: 0.56s;">
-    <a href="file:///Users/ludovic/Downloads/index_1.html#" class="btn-appstore">
+  <p class="cta-sub reveal visible" data-en="Free to download. No account needed. Your data stays on your device." data-fr="Gratuit. Sans compte. Vos données restent sur votre appareil." style="transition-delay: 0.48s;">Free to download. No account needed. Your data stays on your device.</p>
+  <div class="cta-actions reveal visible" style="transition-delay: 0.56s;">
+    <a href="file:///Users/ludovic/Downloads/index_2.html#" class="btn-appstore">
       <span class="btn-appstore-text">
         <span class="btn-appstore-sub" data-en="Download on the" data-fr="Disponible sur l&#39;">Download on the</span>
         <span class="btn-appstore-label">App Store</span>
