@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<!-- saved from url=(0044)file:///Users/ludovic/Downloads/index_2.html -->
+<!-- saved from url=(0044)file:///Users/ludovic/Downloads/index_3.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Swim Bike Run — Your triathlon companion</title>
   <meta name="description" content="Prepare, race and analyse every triathlon. Checklists, reminders, debriefs — all in one app.">
+  <script defer="" src="./index_files/script.js" data-website-id="285f391d-2ebb-4bff-b50a-7d4182601315"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com/">
   <link href="./index_files/css2" rel="stylesheet">
   <style>
@@ -152,7 +153,7 @@
 </head>
 <body>
 
-<div class="cursor" id="cursor" style="left: 1080px; top: 566px;"></div>
+<div class="cursor" id="cursor" style="left: 829px; top: 428px;"></div>
 
 <nav>
   <div class="nav-logo">
@@ -168,7 +169,7 @@
       <button class="lang-btn active" onclick="setLang(&#39;en&#39;)">EN</button>
       <button class="lang-btn" onclick="setLang(&#39;fr&#39;)">FR</button>
     </div>
-    <a href="file:///Users/ludovic/Downloads/index_2.html#download" class="nav-cta" data-en="Download iOS" data-fr="Télécharger iOS">Download iOS</a>
+    <a href="file:///Users/ludovic/Downloads/index_3.html#download" class="nav-cta" data-en="Download iOS" data-fr="Télécharger iOS" data-umami-event="appstore-click" data-umami-event-section="nav">Download iOS</a>
   </div>
 </nav>
 
@@ -188,7 +189,7 @@
   <p class="hero-tagline" data-en="Everything you need to &lt;strong&gt;prepare, race&lt;/strong&gt; and &lt;strong&gt;analyse&lt;/strong&gt; every triathlon." data-fr="Tout ce qu&#39;il vous faut pour &lt;strong&gt;préparer, vivre&lt;/strong&gt; et &lt;strong&gt;analyser&lt;/strong&gt; chaque triathlon.">Everything you need to <strong>prepare, race</strong> and <strong>analyse</strong> every triathlon.</p>
 
   <div class="hero-actions" id="download">
-    <a href="file:///Users/ludovic/Downloads/index_2.html#" class="btn-appstore">
+    <a href="file:///Users/ludovic/Downloads/index_3.html#" class="btn-appstore" data-umami-event="appstore-click" data-umami-event-section="hero">
       <span class="btn-appstore-text">
         <span class="btn-appstore-sub" data-en="Download on the" data-fr="Disponible sur l&#39;">Download on the</span>
         <span class="btn-appstore-label">App Store</span>
@@ -298,7 +299,7 @@
   </h2>
   <p class="cta-sub reveal visible" data-en="Free to download. No account needed. Your data stays on your device." data-fr="Gratuit. Sans compte. Vos données restent sur votre appareil." style="transition-delay: 0.48s;">Free to download. No account needed. Your data stays on your device.</p>
   <div class="cta-actions reveal visible" style="transition-delay: 0.56s;">
-    <a href="file:///Users/ludovic/Downloads/index_2.html#" class="btn-appstore">
+    <a href="file:///Users/ludovic/Downloads/index_3.html#" class="btn-appstore" data-umami-event="appstore-click" data-umami-event-section="cta">
       <span class="btn-appstore-text">
         <span class="btn-appstore-sub" data-en="Download on the" data-fr="Disponible sur l&#39;">Download on the</span>
         <span class="btn-appstore-label">App Store</span>
@@ -329,6 +330,7 @@
     document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.textContent.toLowerCase() === lang));
     document.querySelectorAll('[data-' + lang + ']').forEach(el => { el.innerHTML = el.getAttribute('data-' + lang); });
     document.documentElement.lang = lang;
+    if (window.umami) window.umami.track('lang-switch', { lang });
   }
   setLang('en');
 
