@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<!-- saved from url=(0044)file:///Users/ludovic/Downloads/index_1.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Swim Bike Run — Your triathlon companion</title>
+  <meta name="description" content="Prepare, race and analyse every triathlon. Checklists, reminders, debriefs — all in one app.">
+  <link rel="preconnect" href="https://fonts.googleapis.com/">
+  <link href="./index_files/css2" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #07070F; --surface: #0F0F1C; --border: #1E1E30;
+      --swim: #00D4FF; --bike: #FF6B00; --run: #00FF88;
+      --text: #FFFFFF; --muted: #6060A0; --dimmer: #2A2A45;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Barlow', sans-serif; font-weight: 400; overflow-x: hidden; cursor: none; }
+
+    .cursor { width: 10px; height: 10px; background: var(--swim); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: width 0.2s, height 0.2s, background 0.2s; mix-blend-mode: screen; }
+    .cursor.big { width: 40px; height: 40px; background: rgba(0,212,255,0.3); }
+
+    body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 0; opacity: 0.4; }
+
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; display: flex; align-items: center; justify-content: space-between; padding: 20px 48px; background: rgba(7,7,15,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.04); z-index: 100; }
+    .nav-logo { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 20px; letter-spacing: 1px; color: var(--text); display: flex; align-items: center; gap: 10px; }
+    .nav-logo-dots { display: flex; gap: 5px; }
+    .nav-logo-dot { width: 8px; height: 8px; border-radius: 4px; }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+
+    .lang-toggle { display: flex; align-items: center; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+    .lang-btn { padding: 8px 14px; cursor: none; background: transparent; border: none; font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.5px; color: var(--muted); transition: background 0.2s, color 0.2s; }
+    .lang-btn.active { background: var(--swim); color: #000; }
+    .lang-btn:hover:not(.active) { color: var(--text); }
+
+    .nav-cta { background: var(--swim); color: #000; font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 14px; letter-spacing: 0.5px; padding: 10px 22px; border-radius: 10px; text-decoration: none; cursor: none; transition: opacity 0.2s, transform 0.2s; }
+    .nav-cta:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    /* HERO */
+    .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 120px 24px 80px; position: relative; overflow: hidden; }
+    .hero-glow { position: absolute; border-radius: 50%; pointer-events: none; }
+    .hero-glow-swim { top: -100px; left: -150px; width: 600px; height: 600px; background: radial-gradient(circle, rgba(0,212,255,0.12) 0%, transparent 65%); animation: drift 8s ease-in-out infinite alternate; }
+    .hero-glow-bike { bottom: -80px; right: -120px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(255,107,0,0.08) 0%, transparent 65%); animation: drift 10s ease-in-out infinite alternate-reverse; }
+    .hero-glow-run  { top: 40%; left: 60%; width: 400px; height: 400px; background: radial-gradient(circle, rgba(0,255,136,0.06) 0%, transparent 65%); animation: drift 12s ease-in-out infinite alternate; }
+    @keyframes drift { from { transform: translate(0,0) scale(1); } to { transform: translate(40px,30px) scale(1.05); } }
+
+    .hero-eyebrow { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); margin-bottom: 24px; opacity: 0; animation: fadeUp 0.6s ease 0.1s forwards; }
+    .hero-title { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(80px, 14vw, 160px); font-weight: 900; line-height: 0.9; letter-spacing: -4px; text-align: center; margin-bottom: 32px; opacity: 0; animation: fadeUp 0.7s ease 0.2s forwards; }
+    .word-swim { color: var(--swim); } .word-bike { color: var(--bike); } .word-run { color: var(--run); }
+    .hero-tagline { font-size: clamp(16px, 2.5vw, 22px); font-weight: 300; color: var(--muted); text-align: center; max-width: 520px; line-height: 1.6; margin-bottom: 48px; opacity: 0; animation: fadeUp 0.7s ease 0.35s forwards; }
+    .hero-tagline strong { color: var(--text); font-weight: 500; }
+    .hero-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; justify-content: center; opacity: 0; animation: fadeUp 0.7s ease 0.5s forwards; }
+
+    .btn-appstore { display: flex; align-items: center; gap: 12px; background: var(--text); color: #000; padding: 14px 28px; border-radius: 14px; text-decoration: none; cursor: none; transition: transform 0.2s, opacity 0.2s; }
+    .btn-appstore:hover { transform: translateY(-2px); opacity: 0.9; }
+    .btn-appstore-text { display: flex; flex-direction: column; line-height: 1.2; }
+    .btn-appstore-sub { font-size: 10px; font-weight: 400; opacity: 0.6; }
+    .btn-appstore-label { font-size: 15px; font-weight: 700; }
+    .btn-soon { font-size: 13px; color: var(--muted); border: 1px solid var(--border); padding: 14px 24px; border-radius: 14px; }
+
+    /* Phone */
+    .hero-phone-wrap { margin-top: 80px; position: relative; opacity: 0; animation: fadeUp 0.9s ease 0.6s forwards; }
+    .hero-phone { width: 280px; background: var(--surface); border-radius: 40px; border: 1px solid rgba(255,255,255,0.08); overflow: hidden; box-shadow: 0 0 0 1px rgba(255,255,255,0.04), 0 60px 120px rgba(0,0,0,0.9), 0 0 80px rgba(0,212,255,0.08); }
+    .phone-notch { width: 90px; height: 26px; background: #000; border-radius: 0 0 14px 14px; margin: 0 auto; }
+    .phone-status { display: flex; justify-content: space-between; padding: 6px 20px 0; font-size: 10px; font-weight: 700; font-family: 'Barlow Condensed', sans-serif; }
+    .phone-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 14px; border-bottom: 1px solid var(--border); }
+    .phone-header-btn { width: 28px; height: 28px; border-radius: 9px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 12px; }
+    .phone-header-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 13px; }
+    .phone-header-avatar { width: 28px; height: 28px; border-radius: 9px; background: var(--swim); display: flex; align-items: center; justify-content: center; font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 900; color: #000; }
+    .phone-content { padding: 10px; }
+    .phone-hero-card { background: rgba(255,255,255,0.04); border-radius: 16px; border: 1px solid rgba(0,212,255,0.2); overflow: hidden; }
+    .phone-accent { height: 2px; background: linear-gradient(90deg, var(--swim), var(--bike), var(--run)); }
+    .phone-card-body { padding: 12px; }
+    .phone-dist-pill { display: inline-block; background: rgba(0,212,255,0.12); border: 1px solid rgba(0,212,255,0.25); border-radius: 20px; padding: 2px 8px; font-size: 8px; font-weight: 700; color: var(--swim); letter-spacing: 0.5px; margin-bottom: 6px; }
+    .phone-race-name { font-family: 'Barlow Condensed', sans-serif; font-size: 18px; font-weight: 900; letter-spacing: -0.5px; margin-bottom: 6px; }
+    .phone-countdown-row { display: flex; align-items: flex-end; gap: 5px; margin-bottom: 8px; }
+    .phone-countdown-num { font-family: 'Barlow Condensed', sans-serif; font-size: 44px; font-weight: 900; color: var(--swim); line-height: 1; letter-spacing: -2px; }
+    .phone-countdown-label { font-size: 10px; color: var(--muted); padding-bottom: 7px; }
+    .phone-disc-row { display: flex; gap: 5px; margin-bottom: 8px; }
+    .phone-disc-chip { flex: 1; border-radius: 8px; padding: 5px 4px; border: 1px solid; text-align: center; font-size: 12px; }
+    .phone-progress-label { display: flex; justify-content: space-between; font-size: 9px; color: var(--muted); margin-bottom: 3px; }
+    .phone-progress-bar { height: 2px; background: var(--border); border-radius: 1px; overflow: hidden; margin-bottom: 8px; }
+    .phone-progress-fill { height: 100%; background: var(--swim); border-radius: 1px; }
+    .phone-mini-stats { display: flex; gap: 5px; }
+    .phone-mini-stat { flex: 1; background: rgba(255,255,255,0.04); border-radius: 7px; padding: 5px; text-align: center; border: 1px solid var(--border); }
+    .phone-mini-val { font-size: 10px; font-weight: 700; }
+    .phone-mini-label { font-size: 7px; color: var(--muted); margin-top: 1px; }
+    .phone-mini-cta { background: rgba(0,212,255,0.08); border-color: rgba(0,212,255,0.2); }
+    .phone-mini-cta .phone-mini-val { color: var(--swim); }
+    .phone-glow { position: absolute; bottom: -40px; left: 50%; transform: translateX(-50%); width: 200px; height: 60px; background: rgba(0,212,255,0.15); filter: blur(30px); border-radius: 50%; pointer-events: none; }
+
+    /* FEATURES */
+    .features { padding: 120px 48px; max-width: 1100px; margin: 0 auto; }
+    .section-eyebrow { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
+    .section-title { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(40px, 6vw, 72px); font-weight: 900; letter-spacing: -2px; line-height: 0.95; margin-bottom: 64px; }
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2px; }
+    .feature-card { background: var(--surface); padding: 40px 36px; position: relative; overflow: hidden; transition: background 0.3s; }
+    .feature-card:hover { background: rgba(255,255,255,0.03); }
+    .feature-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; }
+    .feature-card.swim::before { background: var(--swim); }
+    .feature-card.bike::before { background: var(--bike); }
+    .feature-card.run::before  { background: var(--run); }
+    .feature-num { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 2px; color: var(--dimmer); margin-bottom: 24px; }
+    .feature-icon { font-size: 36px; margin-bottom: 16px; display: block; }
+    .feature-title { font-family: 'Barlow Condensed', sans-serif; font-size: 28px; font-weight: 900; letter-spacing: -0.5px; margin-bottom: 12px; }
+    .feature-card.swim .feature-title { color: var(--swim); }
+    .feature-card.bike .feature-title { color: var(--bike); }
+    .feature-card.run  .feature-title { color: var(--run); }
+    .feature-desc { font-size: 15px; line-height: 1.65; color: var(--muted); }
+    .feature-items { margin-top: 20px; display: flex; flex-direction: column; gap: 8px; }
+    .feature-item { display: flex; align-items: center; gap: 10px; font-size: 13px; color: rgba(255,255,255,0.5); }
+    .feature-item::before { content: ''; width: 4px; height: 4px; border-radius: 2px; flex-shrink: 0; }
+    .feature-card.swim .feature-item::before { background: var(--swim); }
+    .feature-card.bike .feature-item::before { background: var(--bike); }
+    .feature-card.run  .feature-item::before { background: var(--run); }
+
+    /* CTA */
+    .cta-section { padding: 120px 24px; text-align: center; position: relative; overflow: hidden; border-top: 1px solid var(--border); }
+    .cta-glow { position: absolute; top: -100px; left: 50%; transform: translateX(-50%); width: 600px; height: 400px; background: radial-gradient(ellipse, rgba(0,212,255,0.08) 0%, transparent 65%); pointer-events: none; }
+    .cta-title { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(48px, 8vw, 96px); font-weight: 900; letter-spacing: -3px; line-height: 0.95; margin-bottom: 24px; position: relative; z-index: 1; }
+    .cta-sub { font-size: 17px; color: var(--muted); max-width: 400px; margin: 0 auto 40px; line-height: 1.6; position: relative; z-index: 1; }
+    .cta-actions { position: relative; z-index: 1; display: flex; justify-content: center; }
+
+    /* FOOTER */
+    footer { border-top: 1px solid var(--border); padding: 32px 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .footer-logo { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 16px; letter-spacing: 1px; color: var(--muted); }
+    .footer-right { font-size: 12px; color: var(--dimmer); }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    .reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 768px) {
+      nav { padding: 16px 20px; }
+      .features { padding: 80px 20px; }
+      .features-grid { grid-template-columns: 1fr; gap: 1px; }
+      .feature-card { padding: 32px 24px; }
+      footer { padding: 24px 20px; }
+      body { cursor: auto; }
+      .cursor { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="cursor" id="cursor" style="left: 955px; top: 531px;"></div>
+
+<nav>
+  <div class="nav-logo">
+    <div class="nav-logo-dots">
+      <div class="nav-logo-dot" style="background:#00D4FF"></div>
+      <div class="nav-logo-dot" style="background:#FF6B00"></div>
+      <div class="nav-logo-dot" style="background:#00FF88"></div>
+    </div>
+    SWIM BIKE RUN
+  </div>
+  <div class="nav-right">
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang(&#39;en&#39;)">EN</button>
+      <button class="lang-btn" onclick="setLang(&#39;fr&#39;)">FR</button>
+    </div>
+    <a href="file:///Users/ludovic/Downloads/index_1.html#download" class="nav-cta" data-en="Download iOS" data-fr="Télécharger iOS">Download iOS</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-glow hero-glow-swim"></div>
+  <div class="hero-glow hero-glow-bike"></div>
+  <div class="hero-glow hero-glow-run"></div>
+
+  <p class="hero-eyebrow" data-en="Your triathlon companion" data-fr="Votre compagnon triathlon">Your triathlon companion</p>
+
+  <h1 class="hero-title">
+    <span class="word-swim">SWIM</span><br>
+    <span class="word-bike">BIKE</span><br>
+    <span class="word-run">RUN</span>
+  </h1>
+
+  <p class="hero-tagline" data-en="Everything you need to &lt;strong&gt;prepare, race&lt;/strong&gt; and &lt;strong&gt;analyse&lt;/strong&gt; every triathlon." data-fr="Tout ce qu&#39;il vous faut pour &lt;strong&gt;préparer, vivre&lt;/strong&gt; et &lt;strong&gt;analyser&lt;/strong&gt; chaque triathlon.">Everything you need to <strong>prepare, race</strong> and <strong>analyse</strong> every triathlon.</p>
+
+  <div class="hero-actions" id="download">
+    <a href="file:///Users/ludovic/Downloads/index_1.html#" class="btn-appstore">
+      <span class="btn-appstore-text">
+        <span class="btn-appstore-sub" data-en="Download on the" data-fr="Disponible sur l&#39;">Download on the</span>
+        <span class="btn-appstore-label">App Store</span>
+      </span>
+    </a>
+    <span class="btn-soon" data-en="Android coming soon" data-fr="Android bientôt disponible">Android coming soon</span>
+  </div>
+
+  <div class="hero-phone-wrap">
+    <div class="hero-phone">
+      <div class="phone-notch"></div>
+      <div class="phone-status"><span>9:41</span><span>●●● 5G</span></div>
+      <div class="phone-header">
+        <div class="phone-header-btn">←</div>
+        <div class="phone-header-title">SWIM BIKE RUN</div>
+        <div class="phone-header-avatar">L</div>
+      </div>
+      <div class="phone-content">
+        <div class="phone-hero-card">
+          <div class="phone-accent"></div>
+          <div class="phone-card-body">
+            <div class="phone-dist-pill">IRONMAN</div>
+            <div class="phone-race-name">Challenge Roth</div>
+            <div class="phone-countdown-row">
+              <div class="phone-countdown-num">47</div>
+              <div class="phone-countdown-label" data-en="days to go" data-fr="jours restants">days to go</div>
+            </div>
+            <div class="phone-disc-row">
+              <div class="phone-disc-chip" style="background:rgba(0,212,255,0.08);border-color:rgba(0,212,255,0.2);color:#00D4FF">🏊</div>
+              <div class="phone-disc-chip" style="background:rgba(255,107,0,0.08);border-color:rgba(255,107,0,0.2);color:#FF6B00">🚴</div>
+              <div class="phone-disc-chip" style="background:rgba(0,255,136,0.08);border-color:rgba(0,255,136,0.2);color:#00FF88">🏃</div>
+            </div>
+            <div class="phone-progress-label">
+              <span data-en="Checklist" data-fr="Checklist">Checklist</span>
+              <span style="color:#00D4FF;font-weight:700">68%</span>
+            </div>
+            <div class="phone-progress-bar"><div class="phone-progress-fill" style="width:68%"></div></div>
+            <div class="phone-mini-stats">
+              <div class="phone-mini-stat">
+                <div class="phone-mini-val">18/30+</div>
+                <div class="phone-mini-label" data-en="Gear" data-fr="Matériel">Gear</div>
+              </div>
+              <div class="phone-mini-stat">
+                <div class="phone-mini-val">3</div>
+                <div class="phone-mini-label" data-en="Reminders" data-fr="Rappels">Reminders</div>
+              </div>
+              <div class="phone-mini-stat phone-mini-cta">
+                <div class="phone-mini-val" data-en="View →" data-fr="Voir →">View →</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="phone-glow"></div>
+  </div>
+</section>
+
+<section class="features">
+  <p class="section-eyebrow reveal" data-en="Built for triathletes" data-fr="Conçu pour les triathlètes" style="transition-delay: 0s;">Built for triathletes</p>
+  <h2 class="section-title reveal" data-en="Three disciplines.&lt;br&gt;One app." data-fr="Trois disciplines.&lt;br&gt;Une seule app." style="transition-delay: 0.08s;">Three disciplines.<br>One app.</h2>
+
+  <div class="features-grid">
+    <div class="feature-card swim reveal" style="transition-delay: 0.16s;">
+      <div class="feature-num">01</div>
+      <span class="feature-icon">✅</span>
+      <h3 class="feature-title" data-en="Gear Checklist" data-fr="Checklist matériel">Gear Checklist</h3>
+      <p class="feature-desc" data-en="Never forget a thing on race day. 30+ items organised by discipline, customisable to your kit." data-fr="Ne rien oublier le jour J. 30+ équipements organisés par discipline, adaptés à votre matériel.">Never forget a thing on race day. 30+ items organised by discipline, customisable to your kit.</p>
+      <div class="feature-items">
+        <div class="feature-item" data-en="Wetsuit, goggles, swim cap" data-fr="Combinaison, lunettes, bonnet">Wetsuit, goggles, swim cap</div>
+        <div class="feature-item" data-en="Bike, helmet, shoes, nutrition" data-fr="Vélo, casque, chaussures, nutrition">Bike, helmet, shoes, nutrition</div>
+        <div class="feature-item" data-en="Race kit, GPS, chargers" data-fr="Tenue de course, GPS, chargeurs">Race kit, GPS, chargers</div>
+      </div>
+    </div>
+
+    <div class="feature-card bike reveal" style="transition-delay: 0.24s;">
+      <div class="feature-num">02</div>
+      <span class="feature-icon">🔔</span>
+      <h3 class="feature-title" data-en="Smart Reminders" data-fr="Rappels intelligents">Smart Reminders</h3>
+      <p class="feature-desc" data-en="Race-specific notifications at the right time. Book accommodation, service the bike, read the rules." data-fr="Notifications liées à votre course, au bon moment. Hébergement, révision vélo, règlement.">Race-specific notifications at the right time. Book accommodation, service the bike, read the rules.</p>
+      <div class="feature-items">
+        <div class="feature-item" data-en="J-30 · Book transport &amp; hotel" data-fr="J-30 · Réserver transport &amp; hôtel">J-30 · Book transport &amp; hotel</div>
+        <div class="feature-item" data-en="J-7 · Prepare your bag" data-fr="J-7 · Préparer son sac">J-7 · Prepare your bag</div>
+        <div class="feature-item" data-en="Syncs with your calendar" data-fr="Synchronisation avec votre calendrier">Syncs with your calendar</div>
+      </div>
+    </div>
+
+    <div class="feature-card run reveal" style="transition-delay: 0.32s;">
+      <div class="feature-num">03</div>
+      <span class="feature-icon">📊</span>
+      <h3 class="feature-title" data-en="Post-Race Debrief" data-fr="Débrief post-course">Post-Race Debrief</h3>
+      <p class="feature-desc" data-en="Log your times, feeling and analysis right after the finish line. Track your progress every season." data-fr="Notez vos temps, ressenti et analyse dès la ligne d&#39;arrivée. Suivez vos progrès saison après saison.">Log your times, feeling and analysis right after the finish line. Track your progress every season.</p>
+      <div class="feature-items">
+        <div class="feature-item" data-en="Split times per segment" data-fr="Temps par discipline">Split times per segment</div>
+        <div class="feature-item" data-en="Rating &amp; feeling" data-fr="Note &amp; ressenti">Rating &amp; feeling</div>
+        <div class="feature-item" data-en="Full race history" data-fr="Historique complet">Full race history</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="cta-glow"></div>
+  <h2 class="cta-title reveal" style="transition-delay: 0.4s;">
+    <span data-en="Ready to" data-fr="Prêt à">Ready to</span><br>
+    <span style="color:var(--swim)" data-en="race" data-fr="courir">race</span><span style="color:var(--bike)" data-en=" smarter" data-fr=" plus"> smarter</span><span style="color:var(--run)" data-en="?" data-fr=" fort ?">?</span>
+  </h2>
+  <p class="cta-sub reveal" data-en="Free to download. No account needed. Your data stays on your device." data-fr="Gratuit. Sans compte. Vos données restent sur votre appareil." style="transition-delay: 0.48s;">Free to download. No account needed. Your data stays on your device.</p>
+  <div class="cta-actions reveal" style="transition-delay: 0.56s;">
+    <a href="file:///Users/ludovic/Downloads/index_1.html#" class="btn-appstore">
+      <span class="btn-appstore-text">
+        <span class="btn-appstore-sub" data-en="Download on the" data-fr="Disponible sur l&#39;">Download on the</span>
+        <span class="btn-appstore-label">App Store</span>
+      </span>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">SWIM BIKE RUN</div>
+  <div class="footer-right" data-en="© 2025 · Made for triathletes" data-fr="© 2025 · Conçu pour les triathlètes">© 2025 · Made for triathletes</div>
+</footer>
+
+<script>
+  // Cursor
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top  = e.clientY + 'px';
+  });
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('big'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('big'));
+  });
+
+  // Lang
+  function setLang(lang) {
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.textContent.toLowerCase() === lang));
+    document.querySelectorAll('[data-' + lang + ']').forEach(el => { el.innerHTML = el.getAttribute('data-' + lang); });
+    document.documentElement.lang = lang;
+  }
+  setLang('en');
+
+  // Scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach((el, i) => { el.style.transitionDelay = (i * 0.08) + 's'; observer.observe(el); });
+</script>
+
+
+</body></html>
